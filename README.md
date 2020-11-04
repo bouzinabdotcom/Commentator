@@ -20,6 +20,9 @@ Though it may look weird to look at "Swiss cheese" produced by the code's absenc
 For the time being, I expect I'll be the only one using this tool for my grading benefits.
 For it to be as painless as possible to use for students, I can imagine it being turned into a web API and corresponding friendly site.
 
+## Web App
+Getting clang and python to agree might take you some time (1 hour in my case), that's why I made a [web app](https://commentator.bouzinab.com) to make things easier. Just upload your .c/.cpp file and download the version with just the comments on it. (Have fun.)
+
 ## Usage
 
 `commentator` uses [libclang](https://clang.llvm.org/docs/Tooling.html) and its [Python bindings](https://github.com/llvm-mirror/clang/blob/master/bindings/python/clang/cindex.py) to parse files of C and C++ source code.
