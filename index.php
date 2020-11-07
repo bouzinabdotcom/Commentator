@@ -81,21 +81,14 @@
         </div>
 
         <div class="editor">
-            <h2>Try it!</h2>
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-12">
-                    <p class="text-center"><b>Code:</b> <br/><small>You can drag and drop your C/C++ file to this editor and magically strip it out of its code.</small></p>
                     <div class="editorarea " id="editorarea1"></div>
                 </div>
                 <div class="col-lg-6 col-12">
-                    <p class="text-center"><b>Comments:</b> <br/><small>Now, do these comments tell a good story ?</small></p>
                     <div class="editorarea" id="editorarea2"></div>
                 </div>
             </div>
-            <a id="download_link1" download="code.cpp" href=”” class="btn btn-success">Download Code</a>
-
-            <a id="download_link2" download="comments.cpp" href=”” class="btn btn-primary">Download Comments</a>
-           
         </div>
         
         
@@ -105,16 +98,14 @@
     <div id="editor-value" style="display: none;"></div>
     <script>
 
-        var initCode = `#include<stdio.h> //includes stdio
+    var myCodeMirrorSource = CodeMirror(document.getElementById("editorarea1"), {
+        value: `#include<stdio.h> //includes stdio
 int main() //main function
 {
 	puts("Hello World!"); //prints "Hello World!" 
 	return 0; //returns 0 to shell
 }
-`;
-
-    var myCodeMirrorSource = CodeMirror(document.getElementById("editorarea1"), {
-        value: '',
+`,
         mode:  "clike",
         theme: "ayu-mirage",
         lineNumbers: true,
@@ -134,73 +125,34 @@ int main() //main function
 
     
     CodeMirror.on(myCodeMirrorSource, "change", function(){
-        var text = myCodeMirrorSource.doc.getValue();
-        
-        var data = new Blob([text], {type: 'text/plain'});
-
-        var url = window.URL.createObjectURL(data);
-
-        document.getElementById('download_link1').href = url;
-
         var formdata = new FormData();
         formdata.append("code", myCodeMirrorSource.doc.getValue());
-    
+        formdata.append("ext", ".c");
+        
         
         fetch("process-live.php", {
             method: "POST",
             body: formdata
         })
         .then((response)=>{
-            response.text().then(function(responseString) { 
-                myCodeMirrorComments.doc.setValue(responseString);
-                var text = responseString;
-                var data = new Blob([text], {type: 'text/plain'});
-
-                var url = window.URL.createObjectURL(data);
-
-                document.getElementById('download_link2').href = url;
-            });
+            myCodeMirrorComments.doc.setValue(response.body);
         })
         .catch((err)=>{
-            console.log("error with request\n", err);
+            console.log("error with request");
         })
     });
-
-    myCodeMirrorSource.doc.setValue(initCode);
-
 
     CodeMirror.on(myCodeMirrorSource, "dragover", function(){
         myCodeMirrorSource.doc.setValue("");
     });
 
-    document.getElementById("editorarea1").addEventListener("mouseover", function(){
-        myCodeMirrorSource.focus();
-    });
-
-    document.getElementById("editorarea2").addEventListener("mouseover", function(){
-        myCodeMirrorComments.focus();
-    });
-
-    CodeMirror.on(myCodeMirrorSource, "scroll", function(){
-        if(myCodeMirrorSource.hasFocus()){
-            var {top, left} = myCodeMirrorSource.getScrollInfo();
-            myCodeMirrorComments.scrollTo(left, top);
-        }
-    });
-
-    CodeMirror.on(myCodeMirrorComments, "scroll", function(){
-        if(myCodeMirrorComments.hasFocus()){
-            var {top, left} = myCodeMirrorComments.getScrollInfo();
-            myCodeMirrorSource.scrollTo(left, top);
-        }
-    });
 	
 
 	
     </script> 
     
     
-    <footer><small>Made with ♥️ by <a href="https://github.com/bouzinabdotcom" target="blank">Omar Bouzinab</a> using Prof. Thierry Seegers's <a href="https://github.com/thierryseegers/Commentator" target="blank">Commentator</a>. </small></footer>
+    <footer><small>Made with ♥️ by <a href="https://github.com/bouzinabdotcom" target="blank">Omar Bouzinab</a> using Prof. Thierry Seegers's <a href="https://github.com/thierryseegers/Commentator" target="blank">Commentator</a>. <iframe src="https://ghbtns.com/github-btn.html?user=thierryseegers&repo=Commentator&type=star&count=true" frameborder="0" scrolling="0" width="150" height="20" title="GitHub"></iframe></small></footer>
     
 </body>
 </html>
