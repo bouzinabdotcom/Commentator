@@ -21,7 +21,15 @@ For the time being, I expect I'll be the only one using this tool for my grading
 For it to be as painless as possible to use for students, I can imagine it being turned into a web API and corresponding friendly site.
 
 ## Web App
-Getting clang and python to agree might take you some time (1 hour in my case), that's why I made a [web app](https://commentator.bouzinab.com) to make things easier. Just upload your .c/.cpp file and download the version with just the comments on it. (Have fun.)
+Getting clang and python to agree might take you some time (1 hour in my case), that's why I made a [web app](https://commentator.bouzinab.com) to make things easier. Now you can just drap & drop your c/c++ file into the code editor and it'll automatically get stripped out of its code. 
+
+The web app is also capable of dynamically remove the code while you edit your file.
+
+If you want to save both your files there are buttons for that.
+
+The editor is capable of synchronized scrolling for your convenience. 
+
+
 
 ## Usage
 
