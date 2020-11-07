@@ -127,6 +127,7 @@ int main() //main function
         mode:  "clike",
         theme: "ayu-mirage",
         lineNumbers: true,
+        readOnly: true,
     });
 
 
